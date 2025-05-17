@@ -1,0 +1,100 @@
+# Laporan Proyek Machine Learning: Klasifikasi Komoditas Pertanian dan Peternakan
+
+## 1. Domain Proyek
+
+### Latar Belakang
+Pertanian dan peternakan merupakan sektor strategis dalam ketahanan pangan nasional di Indonesia. Namun, efisiensi dalam produksi masih menjadi tantangan, terutama dalam hal klasifikasi dan perencanaan jenis komoditas berdasarkan data kuantitatif seperti luas lahan, hasil produksi, dan jumlah ternak. Teknologi machine learning dapat digunakan untuk mengotomatisasi proses ini, membantu petani dan peternak dalam pengambilan keputusan yang lebih baik.
+
+Menurut [BPS (2023)](https://www.bps.go.id/), variasi produktivitas dan jumlah ternak di setiap daerah menunjukkan adanya potensi untuk optimalisasi produksi melalui pemanfaatan data. Inisiatif seperti Agriculture 4.0 yang didorong oleh [Kementerian Pertanian RI](http://www.pertanian.go.id/) mendukung integrasi teknologi dalam sektor ini.
+
+---
+
+## 2. Business Understanding
+
+### Problem Statement
+Bagaimana cara mengklasifikasikan jenis komoditas pertanian dan peternakan berdasarkan parameter kuantitatif?
+
+### Goals
+Membangun model klasifikasi yang mampu mengenali jenis komoditas secara otomatis dengan akurasi ≥ 85%.
+
+### Solution Statement
+1. Membangun baseline model dengan algoritma **Decision Tree**.
+2. Melakukan peningkatan performa model dengan **hyperparameter tuning** (`max_depth`, `criterion`, dan `min_samples_split`).
+3. Jika akurasi masih rendah, menguji algoritma alternatif seperti **Random Forest** atau **KNN**.
+
+---
+
+## 3. Data Understanding
+
+### Informasi Dataset
+- Jumlah Data: 1000 sampel
+- Format: CSV
+- Link: [dataset_pertanian_peternakan_kuantitatif.csv](sandbox:/mnt/data/dataset_pertanian_peternakan_kuantitatif.csv)
+
+### Fitur Dataset
+- `ID`: Identifikasi unik data
+- `Jenis Komoditas`: Target klasifikasi (Padi, Jagung, Sapi, Ayam, dll)
+- `Luas Lahan (ha)`
+- `Produksi (ton)`
+- `Jumlah Ternak (ekor)`
+- `Berat Rata-rata Ternak (kg)`
+- `Umur Panen (hari)`
+
+### Analisis Awal
+- Distribusi target tidak terlalu timpang.
+- Beberapa fitur memiliki rentang nilai yang besar.
+- Dilakukan visualisasi histogram dan korelasi fitur terhadap target.
+
+---
+
+## 4. Data Preparation
+
+### Langkah-Langkah
+1. **Label Encoding** untuk `Jenis Komoditas`.
+2. **StandardScaler** untuk menormalkan fitur numerik.
+3. **Train-Test Split** (80:20, stratify) agar distribusi kelas tetap seimbang.
+
+### Alasan
+- Encoding diperlukan karena target bersifat kategorikal.
+- Normalisasi membantu mengurangi bias fitur yang berskala besar.
+- Split data memastikan model diuji pada data yang belum terlihat.
+
+---
+
+## 5. Modeling
+
+### Algoritma: Decision Tree Classifier
+
+Parameter yang digunakan:
+```python
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier(criterion='entropy', max_depth=10, random_state=42)
+clf.fit(X_train, y_train)
+
+**Kelebihan :**
+- Mudah dipahami dan divisualisasikan
+- Tidak membutuhkan scaling data
+
+**Kekurangan :**
+- Rentan overfitting jika tidak dilakukan pruning
+- Kurang baik jika data sangat kompleks atau non-linear
+
+**Model Improvement :**
+- Tunning parameter dilakukan. namun hasil akurasi terbaik yang di capai adalah 0.66 perlu di uji model alternatif seperti Random Forest atau KNN
+
+## 6. Evaluation
+**Metrik Evaluasi : Accuracy **
+- Formula : Accuracy = (TP + TN ) / (Total Samples)
+
+**Hasil :**
+- Akurasi model pada data uji adalah 66%
+
+**Penjelasan :**
+- Akurasi sebesar 66% menunjukkan bahwa model masih perlu ditingkatkan, terutama jika ditargetkan minimum 85%. Meski demikian, hasil ini cukup baik sebagai baseline, mengingat kompleksitas data dan kemungkinan overlap antar kelas.
+
+**Rencana Selanjutnya : **
+- Menguji model Random Forest dan KNN
+- Menambahkan fitur tambahan seperti lokasi geografis atau jenis pakan untuk meningkatkan kualitas data
+
+## 7. Kesimpulan
+Model klasifikasi Decision Tree dengan tuning awal menghasilkan akurasi sebesar 66%. Meskipun belum memenuhi target minimum 85%, proyek ini menunjukkan bahwa klasifikasi jenis komoditas pertanian dan peternakan secara otomatis memungkinkan untuk dilakukan. Langkah selanjutnya adalah melakukan perbandingan model dan memperkaya fitur.
