@@ -29,7 +29,7 @@ Membangun model klasifikasi yang mampu mengenali jenis komoditas secara otomatis
 ### Informasi Dataset :
 - Jumlah Data: 1000 sampel dengan jumlah kolom 8 ( ID, Jenis Komoditas, Luas Lahan, Produksi, Jumlah Ternak, Berat Rata-rata Ternak, Umur Panen, Label), dan jumlah baris 1000
 - Format File: CSV
-- Link: [dataset_pertanian_peternakan_kuantitatif.csv](sandbox:/mnt/data/dataset_pertanian_peternakan_kuantitatif.csv)
+- Link: https://raw.githubusercontent.com/RioFebriyan244/Klasifikasi_Dataset_Pertanian-Pertenakan_DecisionTreeClassifier/refs/heads/main/Pertanian_Peternakan.csv
 
 ### Uraian Fitur Dataset :
 
